@@ -17,7 +17,7 @@ def Local_weight_generator_RF(input_size, output_size, RF):
         Mask_mat = M[padding:-padding, :]
     return weight_mat, Mask_mat
 
-mat, mas = Local_weight_generator_RF(65*65,33*33,5)
+mat, mas = Local_weight_generator_RF(17*17,9*9,5)
 # Display mask matrix
 plt.matshow(mas)
 plt.show()
@@ -31,8 +31,6 @@ def L2D_weight(input_size, output_size):
     # in a case of a inhibitory matrix we have the same position except the center
     kcl = 0 # line
     kcc = 0 # column
-    # list containing all possible movement
-    kernel = [[kcl,kcc)],[kcl,kcc+1)],[kcl-1,kcc+1],[kcl-1,kcc],[kcl-1,kcc-1],[kcl,kcc-1],[kcl+1,kcc-1],[kcl+1,kcc],[kcl+1,kcc+1]]
     # calculate input range
     input_range = 1.0 / (input_size**2) ** (1/2)
     # create a binary mask and weight matrix
@@ -47,17 +45,20 @@ def L2D_weight(input_size, output_size):
         for v in range(0,input_size,2):
             kcl = u
             kcc = v
+            kernel = [[kcl,kcc],[kcl,kcc+1],[kcl-1,kcc+1],[kcl-1,kcc],[kcl-1,kcc-1],[kcl,kcc-1],[kcl+1,kcc-1],[kcl+1,kcc],[kcl+1,kcc+1]]
             for elem in range(len(kernel)):
-                if kernel[elem][0] > input_size or kernel[elem][0] < 0 or kernel[elem][1] > input_size or kernel[elem][1] < 0:
+                if kernel[elem][0] > input_size-1 or kernel[elem][0] < 0 or kernel[elem][1] > input_size-1 or kernel[elem][1] < 0:
                     pass
                 else:
-                    # calculate the position in the mask matrix
+                    # calculate the position in the mask matrixb
                     line = kernel[elem][0]
                     column = kernel[elem][1]
-                    input_index =
-
+                    input_index = line*input_size + column
                     mask[input_index, hidden_index] = 1
-        hidden_index += 1
+            hidden_index += 1
+
+    plt.matshow(mask)
+    plt.show()
 
     # fill the weight matrix with init weight
     for i in range(input_size):
@@ -68,3 +69,5 @@ def L2D_weight(input_size, output_size):
                 weight[i,j] = 0
 
     return weight, mask
+
+m,w = L2D_weight(129,65)
