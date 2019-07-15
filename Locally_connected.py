@@ -18,8 +18,6 @@ def Local_weight_generator_RF(input_size, output_size, RF):
         Mask_mat = M[padding:-padding, :]
     return weight_mat, Mask_mat
 
-mat, mas = Local_weight_generator_RF(81,25,5)
-
 # locally connected 2D layer with 3x3 kernel (input/hidden with odd size only)
 # Mecha_cortex structure : 257-> 129-> 65-> 33-> 17-> 9-> 5
 def L2D_weight(input_size, output_size, inh):
@@ -70,10 +68,7 @@ def L2D_weight(input_size, output_size, inh):
                 weight[i,j] = np.random.normal(loc=0, scale=input_range)
             else:
                 pass
-
     return weight, mask
-
-w,m = L2D_weight(9,5,False)
 
 # locally connected recurrent unit
 def LR_weight(Hidden_size):
@@ -83,8 +78,6 @@ def LR_weight(Hidden_size):
         W_rec[i,i] = np.random.uniform(0,1)
         Mask_rec[i,i] = 1
     return W_rec, Mask_rec
-
-wr, mr = LR_weight(5)
 
 # lateral inhibition weight matrix
 def LI2D_weight(hidden_size):
@@ -128,7 +121,6 @@ def LI2D_weight(hidden_size):
                 weight[i,j] = np.random.normal(loc=0, scale=input_range)
             else:
                 pass
-
     return weight, mask
 
-wi,mi = LI2D_weight(17)
+
