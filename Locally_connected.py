@@ -59,8 +59,6 @@ def L2D_weight(input_size, output_size, inh):
                     input_index = line*input_size + column
                     mask[input_index, hidden_index] = 1
             hidden_index += 1
-
-
     # fill the weight matrix with init weight
     for i in range(input_size**2):
         for j in range(output_size**2):
@@ -113,7 +111,6 @@ def LI2D_weight(hidden_size):
                     mask[input_index, hidden_index] = 1
                     mask[hidden_index, input_index] = 1
             hidden_index += 1
-
     # fill the weight matrix with init weight
     for i in range(hidden_size**2):
         for j in range(hidden_size**2):
