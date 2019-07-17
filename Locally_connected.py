@@ -19,8 +19,7 @@ def Local_weight_generator_RF(input_size, output_size, RF):
     return weight_mat, Mask_mat
 
 # locally connected 2D layer with 3x3 kernel (input/hidden with odd size only)
-# Mecha_cortex structure : 257-> 129-> 65-> 33-> 17-> 9-> 5
-def L2D_weight(input_size, output_size, inh):
+def L2D_weight(input_size, output_size):
     # init kernel center position in the input
     # kernel size = 3x3, so for each position we need to get the element :
     # [[kcl,kcc)],[kcl,kcc+1)],[kcl-1,kcc+1],[kcl-1,kcc],[kcl-1,kcc-1],[kcl,kcc-1],[kcl+1,kcc-1],[kcl+1,kcc],[kcl+1,kcc+1]]
@@ -41,13 +40,7 @@ def L2D_weight(input_size, output_size, inh):
         for v in range(0,input_size,2):
             kcl = u
             kcc = v
-            # verify type of connection
-            if inh == True:
-                # local inhibition
-                kernel = [[kcl,kcc+1],[kcl-1,kcc+1],[kcl-1,kcc],[kcl-1,kcc-1],[kcl,kcc-1],[kcl+1,kcc-1],[kcl+1,kcc],[kcl+1,kcc+1]]
-            else:
-                # local excitation
-                kernel = [[kcl,kcc],[kcl,kcc+1],[kcl-1,kcc+1],[kcl-1,kcc],[kcl-1,kcc-1],[kcl,kcc-1],[kcl+1,kcc-1],[kcl+1,kcc],[kcl+1,kcc+1]]
+            kernel = [[kcl,kcc],[kcl,kcc+1],[kcl-1,kcc+1],[kcl-1,kcc],[kcl-1,kcc-1],[kcl,kcc-1],[kcl+1,kcc-1],[kcl+1,kcc],[kcl+1,kcc+1]]
             # add each kernel to the weight and mask matrix
             for elem in range(len(kernel)):
                 if kernel[elem][0] > input_size-1 or kernel[elem][0] < 0 or kernel[elem][1] > input_size-1 or kernel[elem][1] < 0:
